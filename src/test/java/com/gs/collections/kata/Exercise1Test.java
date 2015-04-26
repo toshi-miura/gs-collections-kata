@@ -26,49 +26,48 @@ import com.gs.collections.impl.test.Verify;
 
 public class Exercise1Test extends CompanyDomainForKata
 {
-    @Test
-    public void getCustomerNames()
-    {
-        Function<Customer, String> nameFunction = Customer::getName;
+	@Test
+	public void getCustomerNames()
+	{
+		Function<Customer, String> nameFunction = Customer::getName;
 
-        /**
-         * Get the name of each of the company's customers.
-         */
-        MutableList<Customer> customers = this.company.getCustomers();
-        MutableList<String> customerNames = customers.collect(nameFunction);
+		/**
+		 * Get the name of each of the company's customers.
+		 */
+		MutableList<Customer> customers = this.company.getCustomers();
+		MutableList<String> customerNames = customers.collect(Customer::getName);
 
-        MutableList<String> expectedNames = FastList.newListWith("Fred", "Mary", "Bill");
-        Assert.assertEquals(expectedNames, customerNames);
-    }
+		customerNames = customers.collect(nameFunction);
 
-    @Test
-    public void getCustomerCities()
-    {
+		MutableList<String> expectedNames = FastList.newListWith("Fred", "Mary", "Bill");
+		Assert.assertEquals(expectedNames, customerNames);
+	}
 
-        /**
-         * Get the city for each of the company's customers.
-         */
-        MutableList<Customer> customers = this.company.getCustomers();
-        MutableList<String> customerCities = customers.collect(Customer::getCity);
+	@Test
+	public void getCustomerCities()
+	{
 
-        MutableList<String> expectedCities = FastList.newListWith("London", "Liphook", "London");
-        Assert.assertEquals(expectedCities, customerCities);
-    }
+		/**
+		 * Get the city for each of the company's customers.
+		 */
+		MutableList<Customer> customers = this.company.getCustomers();
+		MutableList<String> customerCities = customers.collect(Customer::getCity);
 
-    @Test
-    public void getLondonCustomers()
-    {
-        /**
-         * Which customers come from London? Get a collection of those which do.
-         */
-        MutableList<Customer> customers = this.company.getCustomers();
+		MutableList<String> expectedCities = FastList.newListWith("London", "Liphook", "London");
+		Assert.assertEquals(expectedCities, customerCities);
+	}
 
-        MutableList<Customer> customersFromLondon = customers.select(c -> c.getCity().equals("London") );
+	@Test
+	public void getLondonCustomers()
+	{
+		/**
+		 * Which customers come from London? Get a collection of those which do.
+		 */
+		MutableList<Customer> customers = this.company.getCustomers();
 
+		MutableList<Customer> customersFromLondon = customers.select(c -> c.getCity().equals("London"));
 
-        Verify.assertSize("Should be 2 London customers", 2, customersFromLondon);
+		Verify.assertSize("Should be 2 London customers", 2, customersFromLondon);
 
-
-
-    }
+	}
 }
